@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			#head {
+				width: 600px;
+				height: 100px;
+				border: 1px solid #fcdef2;
+				margin: 0 auto;
+			}
+			#content {
+				width: 300px;
+				border: 1px solid #fcdef2;
+				margin: 0 auto;
+			}
+			
+			#time {
+				float: left;
+				margin-left: 25px;
+			}
+			
+			#lang {
+				float: right;
+				margin-right: 30px;
+			}
+			
+			#time,#lang {
+				color:RGB(225,125,155);
+				font-size: 40px;
+				font-weight: 700;
+				line-height: 25px;
+			}
+			h3 {
+				color:RGB(225,125,155);
+				font-size:40px;
+			}
+				
+			h5 {
+				color:RGB(155,55,55);
+				font-size:25px;
+			}
+				
+			body {
+				text-align:center;
+				font-family: 华文行楷;	
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">	
+		<div id="head">
+			<p id="time"></p>
+			<p id="lang"></p>
+		</div>
+		<div id="content">	
+			<h3>简历</h3>
+			<h5>姓名:林奕凯</h5>
+			<p>手机：123456789</p>
+			<p>邮箱：<i>45896712@qq.com</i></p>
+			<p>学历：本科-百度前端技术学院</p>
+			<h5>教育经历</h5>
+			<p>2015-2018:高中</p>
+			<p>2018-2022:大学</p>
+
+			<h5>项目经验：</h5>
+			<p>2018-2019:参加比赛</p>
+			<p>2019-2020:公司实习</p>
+			
+			<h5>获奖经历：</h5>
+			<p>2018-2019:一等奖</p>
+			<p>2019-2020:优秀奖</p>
+		</div>
+		</div>
+		<script>
+			var time=document.getElementById("time");
+			var lang=document.getElementById("lang");
+			var d = new Date();
+			if(d.getMinutes()>10) 
+			time.innerHTML=d.getHours()+" : "+d.getMinutes();
+			if(d.getMinutes()<10) 
+			time.innerHTML=d.getHours()+" : "+"0"+d.getMinutes();
+			if(d.getHours()<=6||22<d.getHours()<=23) lang.innerHTML="晚安，睡个好觉吧"
+			if(6<d.getHours()<=8) lang.innerHTML="早安"
+			if(8<d.getHours()<=12) lang.innerHTML="上午好，早啊"
+			if(12<d.getHours()<=18) lang.innerHTML="下午好，喝下午茶吧";
+			if(18<d.getHours()<=22) lang.innerHTML="晚上好，追剧吧"
+			
+		</script>
+			
+</body>
+
+</html>

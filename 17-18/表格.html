@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		
+	    <button id="99times2" onclick="ntn()">99乘法表2</button>
+	    <p id="t">乘法表：</p>
+		<script>
+			var t=document.getElementById("t");
+			function ntn() {
+				var temp;
+				for(var i=1;i<10;i++) {
+				for(var j=1;j<=i;j++) {
+					temp=i*j;
+					document.write(i+"*"+j+"="+temp+" "+"&nbsp");
+				}
+				document.write("<br />");
+			}	
+			}
+			
+			/*
+			 * 二维数组的定义与使用
+			var arr=new Array();
+			for(var i=1;i<10;i++) {
+				arr[i]=new Array();
+				for(var j=1;j<=i;j++) {
+					arr[i][j]=i*j;
+					document.write(j+"*"+i+"="+arr[i][j]+" "+"&nbsp"+"&nbsp");
+				}
+				document.write("<br />");
+			}
+			*/
+		</script>
+	</body>
+</html>
