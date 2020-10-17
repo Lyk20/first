@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#container {
+				width: 480px;
+				height: 480px;
+				background: url(../img/erik_ce204002.jpg);
+				background-repeat: no-repeat;
+				position: absolute;
+				background-position: 0 40px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+		</div>
+		<script type="text/javascript">
+			var sc=document.getElementById("container");
+			var temp=0;
+			var alt=0;
+			function change() {
+				if(!alt) {
+					temp-=480;
+					sc.style.backgroundPositionY=temp+"px";
+					if(temp<=-7680) {
+						alt=1;
+					}
+				}else {
+					temp+=480;
+					sc.style.backgroundPositionY=temp+"px";
+					if(temp>=0) {
+						alt=0;
+					}
+				}
+			}		
+			setInterval("change()",100);
+		</script>
+	</body>
+</html>
