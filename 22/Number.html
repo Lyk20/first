@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div>
+    <label>Number A:<input id="radio-a" type="radio" name="math-obj" value="a"></label><input id="num-a" type="text">
+    <label>Number B:<input id="radio-b" type="radio" name="math-obj" value="b"></label><input id="num-b" type="text">
+</div>
+<div>
+    <button>判断当前选中的输入框输入内容是否为数字</button>
+    <button>把 A 四舍五入为 B 个小数位数的数字</button>
+    <button>当前选中数字的绝对值</button>
+    <button>对当前选中的数字进行上舍入</button>
+    <button>对当前选中的数字进行下舍入</button>
+    <button>把当前选中的数字四舍五入为最接近的整数</button>
+    <button>返回 A 和 B 中的最高值</button>
+    <button>返回 A 和 B 中的最低值</button>        
+</div>
+	<p id="result"></p>
+	<script type="text/javascript">
+		var rad=document.getElementsByName("math-obj");
+		var btn=document.getElementsByTagName("button");
+		var ipt=document.getElementsByTagName("input");
+		var txt=document.getElementById("result");
+		
+		//判断数字
+		btn[0].onclick=function() {
+			for(var i=0;i<ipt.length;i+=2) {
+				if(ipt[i].checked) {
+					var temp=ipt[i+1].value;
+					if(ipt[i+1].value=="") alert("N"); 
+					else if(!isNaN(temp))  {						
+						alert("Y");
+					}
+					else  {						
+						alert("N");
+					}
+				}
+			}
+		}
+		
+		/*isNaN()检查是否为数字*/
+		//返回最大值
+		btn[6].onclick=function() {
+			try {				
+				var v_1=ipt[1].value;
+				var v_2=ipt[3].value;
+				if(isNaN(v_1) || isNaN(v_2))  throw "请输入数字";
+				var num=Math.max(v_1,v_2);
+				console.log(parseFloat(num));
+			}
+			catch(err) {
+				console.log(err);
+			}
+		}
+		
+		
+		//返回最小值
+		btn[7].onclick=function() {
+			try {				
+				var v_1=ipt[1].value;
+				var v_2=ipt[3].value;
+				if(isNaN(v_1) || isNaN(v_2))  throw "请输入数字";
+				var num=Math.min(v_1,v_2);
+				console.log(parseFloat(num));
+			}
+			catch(err) {
+				console.log(err);
+			}
+		}
+
+		function fun(i) {
+			var temp;
+			try {
+				temp=ipt[i].value;
+				if(isNaN(temp))  throw "请输入数字";
+				btn[2].onclick=function() {
+					temp=Math.abs(temp);
+					txt.innerHTML=temp;
+				}
+				btn[3].onclick=function() {
+					temp=Math.ceil(temp);
+					txt.innerHTML=temp;
+				}
+				btn[4].onclick=function() {
+					temp=Math.floor(temp);
+					txt.innerHTML=temp;
+				}
+				btn[5].onclick=function() {
+					temp=Math.round(temp);
+					txt.innerHTML=temp;
+				}	
+			}
+			catch(err) {
+				console.log(err);
+			}
+			
+		};
+		//得到当前选中数字
+		ipt[1].onfocus=function() {
+			fun(1);
+		}
+		
+		ipt[3].onfocus=function() {
+			fun(3);
+		}
+		
+		//四舍五入为B个小数位的数字
+		btn[1].onclick=function() {
+			try {				
+				var v_1=ipt[1].value;
+				var v_2=ipt[3].value;
+				if(isNaN(v_1) || isNaN(v_2))  throw "请输入数字";
+				v_1=Math.round(v_1);
+				v_1+=".";
+				for(var i=0;i<v_2;i++) {
+					v_1+="0";
+				}
+				txt.innerHTML=v_1;
+			}
+		
+			catch(err) {
+				console.log(err);
+			}
+			
+		}
+	</script>
+
+	</body>
+</html>

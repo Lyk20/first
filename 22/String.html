@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	<div>
+	    <label>String A:
+	        <input id="radio-a" type="radio" checked="true" name="str-obj" value="a">
+	    </label>
+	    
+	    <textarea id="str-a"></textarea>
+	   
+	    <label>String B:
+	        <input id="radio-b" type="radio" name="str-obj" value="b">
+	    </label>
+	    
+	    <textarea id="str-b"></textarea>        
+	    
+	    <label>Num A：<input id="num-a" type="number" value="0"></label>
+	    <label>Num B：<input id="num-b" type="number" value="1"></label>
+	</div>
+	
+	<div>
+	    <button>获取当前选中输入的内容长度</button>
+	    <button>当前选中输入中的第3个字符</button>
+	    <button>把两个输入框的文字连接在一起输出（concat）</button>
+	    <button>输入B中的内容，在输入A的内容中第一次出现的位置（indexOf）</button>
+	    <button>输入A中的内容，在输入B的内容中最后一次出现的位置（lastIndexOf）</button>
+	    <button>使用slice获取选中输入框内容的部分内容，参数为num-a及num-b</button>
+	    <button>当前选中输入框的行数</button>
+	    <button>使用substr获取选中输入框内容的子字符串，参数为num-a及num-b</button>
+	    <button>把所选输入框中的内容全部转为大写</button>
+	    <button>把所选输入框中的内容全部转为小写</button>
+	    <button>把所选输入框中内容的半角空格全部去除</button>
+	    <button>把所选输入框中内容的a全部替换成另外一个输入框中的内容</button>
+	</div>
+	
+	<p id="result"></p>
+	
+	<script type="text/javascript">
+		var ipt=document.getElementsByTagName("textarea");
+		var btn=document.getElementsByTagName("button");
+		var txt=document.getElementById("result");
+		var a=document.getElementById("num-a");
+		var b=document.getElementById("num-b");
+		function fun(index) {
+			var str,st,temp,num_a,num_b;
+			str=ipt[index].value;
+			num_a=a.value;
+			num_b=b.value;
+			btn[0].onclick=function() {
+				txt.innerHTML=str.length;
+			}
+			
+			btn[1].onclick=function() {
+				str=str.charAt(2);
+				txt.innerHTML=str;
+			}
+			
+			//转化为大小写
+			btn[8].onclick=function() {
+				str=str.toUpperCase();
+				txt.innerHTML=str;
+			}
+			btn[9].onclick=function() {
+				str=str.toLowerCase();
+				txt.innerHTML=str;
+			}
+			
+			//去除空格
+			//split转化为数组->字符串
+			btn[10].onclick=function() {
+				//半角空格
+				str=str.split(" ").join("");
+				//全角空格
+				str=str.split("　").join("");
+				txt.innerHTML=str;
+			}
+			
+			//选中文本框的行数
+			/*操作文本框行数方法*/
+			btn[6].onclick=function() {
+				/*str=str.split("\n");
+				txt.innerHTML=str.length;*/
+				var temp,num;
+				temp=ipt[index].cols;
+				num=str.length/temp;
+				num=Math.ceil(num);
+				txt.innerHTML=num;
+			}
+			
+			//slice获取输入框内容
+			//返回新的字符串
+			btn[5].onclick=function() {
+				str=str.slice(num_a,num_b);
+				txt.innerHTML=str;
+			}
+			
+			//起始阶段提取num_b个
+			//substr()返回新的字符串
+			btn[7].onclick=function() {
+				str=str.substr(num_a,num_b);
+				txt.innerHTML=str;
+			}
+			
+			//替换
+			//返回新的字符串
+			btn[11].onclick=function() {
+				st=ipt[index].value;
+				txt.innerHTML=str.replace("a",st);
+				txt.innerHTML=str.replace("a",st);
+			}
+		}
+		//当前选中
+		ipt[0].onfocus=function() {
+			fun(0);
+		}
+		
+		ipt[1].onfocus=function() {
+			fun(1);
+		}
+		
+		//拼接字符串
+		btn[2].onclick=function() {
+			var str,st;
+			str=ipt[0].value;
+			st=ipt[1].value;
+			str=str.concat(st);
+			txt.innerHTML=str;
+			}
+		
+		//匹配位置
+		btn[3].onclick=function() {
+			var str,st,s;
+			str=ipt[0].value;
+			st=ipt[1].value;
+			s=str.indexOf(st);
+			txt.innerHTML=s;
+		}
+		
+		//匹配最后一次位置
+		btn[4].onclick=function() {
+			var str,st,s;
+			str=ipt[0].value;
+			st=ipt[1].value;
+			s=st.lastIndexOf(str);
+			txt.innerHTML=s;
+		}
+	</script>
+	</body>
+</html>

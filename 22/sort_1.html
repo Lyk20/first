@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p id="result"></p>
+		<script type="text/javascript">
+			
+			var arr = [43, 54, 4, -4, 84, 100, 58, 27, 140];
+			
+			console.log("原数组："+arr);
+			console.log("默认排序："+arr.sort());
+			
+			var order_1=arr.sort(function(a,b){
+				return a-b;
+			});
+			console.log("从小到大："+order_1);
+			
+			var order_2=arr.sort(function(a,b) {
+				return b-a;
+			});
+			console.log("从大到小："+order_2);
+		
+			console.log("------------------------------------------------");
+			
+			console.log("原数组："+arr_1);
+			var arr_1 = ['apple', 'dog', 'cat', 'car', 'zoo', 'orange', 'airplane'];
+				console.log("默认排序(a-z)："+arr_1.sort());
+			var order_3=arr_1.sort().reverse();
+				console.log("排序(z-a)："+order_3);
+			
+			
+			console.log("------------------------------------------------");
+			
+			var arr_2 = [[10, 14], [16, 60], [7, 44], [26, 35], [22, 63]];
+			console.log("原数组："+arr_2);
+			console.log("默认排序："+arr_2.sort());
+			var order_4=arr_2.sort(function(a,b) {
+				return a[1]-b[1];
+			})
+			console.log("排序："+order_4.reverse());
+			
+			
+			console.log("------------------------------------------------");
+			
+			var arr_3 = [
+			    {
+			        id: 1,
+			        name: 'candy',
+			        value: 40
+			    }, {
+			        id: 2,
+			        name: 'Simon',
+			        value: 50
+			    }, {
+			        id: 3,
+			        name: 'Tony',
+			        value: 45
+			    }, {
+			        id: 4,
+			        name: 'Annie',
+			        value: 60
+			    }
+			];
+
+			var order_5=arr_3.sort(function(a,b) {
+				return a["value"]-b["value"];
+			})
+			for(var i=0;i<order_5.length;i++) {
+				console.log(order_5[i].value+" "+order_5[i].name);	
+			}
+			
+		</script>
+	</body>
+</html>

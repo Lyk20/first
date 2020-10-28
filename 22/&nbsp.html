@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p id="result"></p>
+		<script type="text/javascript">
+			function diyTrim(str) {
+				var result = "";
+				var a;
+				var b;
+				var lg;
+				var loop=false;
+				var count=str.length;
+				for(var i=0;i<count;i++) {
+					lg=str.length-1;
+					a=str.charAt(0);
+					b=str.charAt(lg);
+					if(a==" " || a=="　")　{
+						str=str.slice(1);
+						loop=true;
+					}
+					if(b==" " || b=="　") {
+						str=str.slice(0,lg);
+						loop=true;
+					}
+					result=str;
+					if(!loop) {
+						break;
+					}
+					loop=false;
+				}
+				return result;
+			}
+
+			// 测试用例
+			console.log(diyTrim(' a f b    ')); // ->a f b
+			console.log(diyTrim('    ffdaf    ')); // ->ffdaf
+			console.log(diyTrim('1    ')); // ->1
+			console.log(diyTrim('　　f')); // ->f
+			console.log(diyTrim('  　  a f b 　　 ')); // ->a f b
+			console.log(diyTrim(' ')); // ->
+			console.log(diyTrim('　')); // ->
+			console.log(diyTrim('')); // ->
+			
+			/*
+			去掉字符串str中，连续重复的地方
+			*/
+			function removeRepetition(str) {
+				var result="";
+				var temp="";
+				var j=0;
+				for(var i=0;i<str.length+1;i++) {
+					if(str[i]==str[i+1]) {
+						temp=str.substr(i+1,1);
+						if(result.length==0) {	
+							result+=temp;
+						}
+						else if(result[j]!=temp) {
+							result+=temp;
+							j++;
+						}
+						temp="";
+					}
+					
+					else if(str[i]!=str[i+1]) {
+						temp=str.substr(i,1);	
+						if(result.length==0) {
+							result+=temp;
+						}
+						else if(result[j]!=temp) {
+							result+=temp;
+							j++;
+						}
+						temp="";
+					}
+		 		}
+				return result;
+			}
+			
+			// 测试用例
+			console.log(removeRepetition("aaa")); // ->a
+			console.log(removeRepetition("abbba")); // ->aba
+			console.log(removeRepetition("aabbaabb")); // ->abab
+			console.log(removeRepetition("")); // ->
+			console.log(removeRepetition("abc")); // ->abc
+			
+		</script>
+	</body>
+</html>
