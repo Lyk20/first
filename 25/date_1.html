@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p id="clock"></p>
+		<p id="clock_0"></p>
+		<script type="text/javascript">
+			var c=document.getElementById("clock");
+			var c_0=document.getElementById("clock_0");
+			function addZero(num) {
+				if(num<10 && num >=0) {
+					num="0"+num;
+				}
+				return num;
+			}
+			
+			function getDate() {				
+				var date=new Date();
+				var d=date.getDate();
+				d=addZero(d);
+				var h=date.getHours();
+				h=addZero(h);
+				var n=date.getMinutes();
+				n=addZero(n);
+				var m=date.getMonth()+1;
+				m=addZero(m);
+				var y=date.getFullYear();
+				var s=date.getSeconds();
+				s=addZero(s);
+				var w=date.getDay();
+				var w_1=showWeek(w);
+				var w_2=changeNum(w);
+				
+				
+				setDate(c,y,m,d,w_2,h,n,s);
+				setDay(c_0,y,m,d,w_1,h,n,s);
+			}
+			
+			function setDate(obj,year,month,day,week,hour,minute,second) {		
+				obj.innerHTML=year+"年"+month+"月"+day+"日"+week+" "+hour+":"+minute+":"+second;
+			}
+			
+			function setDay(obj,year,month,day,week,hour,minute,second) {
+				var hc;
+				if(hour>12) {
+					hour=hour%12;
+					hc="pm";
+				}
+				else 
+					hc="am";
+				obj.innerHTML=year+"-"+month+"-"+day+" "+week+" "+hour+":"+minute+":"+second+" "+hc;
+			}
+			
+			function showWeek(m) {
+				var arr=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+				return arr[m];
+			}
+			function changeNum(m) {
+				var arr=["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+				return arr[m];
+			}
+			
+			var clock_1=setInterval(getDate,1000);
+			var clock_2=setInterval(getDate,1500);
+		</script>
+	</body>
+</html>

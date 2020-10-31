@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<select id="year-select">
+		    <option value="2000">2000</option>
+		    <option value="2009">2009</option>
+		  	<option value="2014">2014</option>
+		  	<option value="2020">2020</option>
+		  	<option value="2025">2025</option>
+		  	<option value="2027">2027</option>
+		  	<option value="2038">2038</option>
+		</select>
+		
+		<select id="month-select">
+		    <option value="1">1</option>
+		    <option value="2">2</option>
+			<option value="3">3</option>
+			<option value="6">6</option>
+			<option value="9">9</option>
+		    <option value="12">12</option>
+		</select>
+		
+		<select id="day-select">
+		    <option value="1">1</option>
+		    <option value="2">2</option>
+		    <option value="27">27</option>
+		    <option value="28">28</option>
+		    <option value="29">29</option>
+			<option value="30">30</option>
+		    <option value="31">31</option>
+		</select>
+		
+		<select id="hour-select">
+		    <option value="0">00</option>
+		    <option value="1">01</option>        
+		    <option value="9">09</option>
+		    <option value="19">19</option>
+		    <option value="23">23</option>
+		</select>
+		
+		<select id="minite-select">
+		    <option value="0">00</option>
+		    <option value="1">01</option>
+		    <option value="9">09</option>
+		    <option value="19">19</option>
+		    <option value="23">23</option>
+		    <option value="59">59</option>
+		</select>
+		
+		<select id="second-select">
+		    <option value="0">00</option>
+		    <option value="1">01</option>
+		    <option value="9">09</option>
+		    <option value="19">19</option>
+		    <option value="23">23</option>
+		    <option value="59">59</option>
+		</select>
+		<button id="btn">查询</button>
+		<p id="result-wrapper"></p>
+		<script>
+			var r=document.getElementById("result-wrapper");
+			var st=document.getElementsByTagName("select");
+			var sp=document.getElementsByTagName("span");
+			var btn=document.getElementById("btn");
+			var arr=[];
+			var pce=[];
+			var time;
+			
+			/*自动改变日子的方法*/
+			function delDay(num,year) {
+				var d=st[2][st[2].length-1].value;
+				if((year%4==0&&year%100!=0) || (year%100==0 && year%400==0)) {
+					//闰年2月
+					if(num==2) {
+						if(d>28)  {
+							while(true) {
+								st[2].remove(st[2].length-1);
+								if(d==28) {
+									break;
+								}
+							}
+						}
+					}
+					
+					else {
+						//闰年小月
+						if(num==4||num==6||num==9||num==11) {
+							if(d>30) {	
+								st[2].remove(st[2].length-1);
+							}
+							else {
+								switchS(d);
+							}
+						}
+						//闰年大月
+						else {
+						switchB(d);
+						}
+					}
+				}
+				
+				else {
+					//平年2月
+					if(num==2) {
+						if(d>29) {		
+							while(true) {
+								st[2].remove(st[2].length-1);
+								if(d==29) {
+									break;
+								}
+							}
+						}
+						else if(d>27) {
+							add("option",29,29);
+						}
+					}
+			
+					//平年大月
+					else {
+						//平年小月
+						if(num==4||num==6||num==9||num==11) {
+							if(d>30) {	
+								st[2].remove(st[2].length-1);
+							}
+							else {
+								switchS(d);
+							}
+						}
+						//平年大月
+						else {
+						switchB(d);
+						}
+					}
+				}
+			}
+			
+			
+			//增删日期
+			function add(o,t,val) {
+				var obj=document.createElement(o);
+				var txt=document.createTextNode(t);
+				obj.appendChild(txt);
+				obj.style.value=val;
+				st[2].appendChild(obj);
+			}
+			
+			function switchB(num) {
+				switch(num) {
+					case "28":
+						add("option",29,29);
+						add("option",30,30);
+						add("option",31,31);
+						break;
+					case "29":
+						add("option",30,30);
+						add("option",31,31);
+						break;
+					case "30":
+						add("option",31,31);
+						break;
+				}
+			}
+			
+			function switchS(num) {
+				switch(num) {
+					case "28":
+						add("option",29,29);
+						add("option",30,30);
+						break;
+					case "29":
+						add("option",30,30);
+						break;
+				}
+			}
+			
+			
+			//获取所选日期
+			st[1].onchange=function() {
+				arr[1]=this.value;
+				delDay(this.value,arr[0]);
+			}
+			
+			st[0].onchange=function() {
+				arr[0]=this.value;
+				delDay(arr[1],this.value);
+			}
+			
+			
+			//获得某天周几
+			function getWeek(y, m, d) {  
+				var startWeek = 1;  
+				if (m < 3) {
+			    m += 12;
+			    --y;
+	  			}  
+	  			return (d + 2 * m + Math.floor(3 * (m + 1) / 5) + y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400)) % 7;
+			}
+			function getWeekText(y, m, d) {  
+				var aWeekTxt = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '周六']  
+				return aWeekTxt[getWeek(y, m, d)];
+			}
+			
+			
+			//修改文本比大小
+			/**
+			 * setFullYear()可设置具体某一天以此来获得这一天的毫秒数
+			 * getTime()等方法会导致月份加一
+			 * */
+			function getDate(a,b,c,d,e,f) {
+				var str;
+				var temp;
+				var date=new Date();
+				/*var dt=date.setFullYear(arr[0],arr[1],arr[2]);*/
+				var dt= new Date(a,b-1,c,d,e,f).getTime();
+				var now=new Date();
+				if(dt>now) {
+					str="还有";
+					temp=dt-now;
+					space(temp,pce);
+				}
+				else {
+					str="已经过去";
+					temp=now-dt;
+					space(temp,pce);
+				}
+				return str;
+			}
+			
+			
+			//转换时间
+			function space(temp,spc) {
+				var d,h,m,s;	
+				spc[0]=Math.floor(temp/1000/60/60/24);
+				d=temp-spc[0]*24*60*60*1000;
+				spc[1]=Math.floor(d/1000/60/60);
+				h=d-spc[1]*60*60*1000;
+				spc[2]=Math.floor(h/1000/60);
+				m=h-spc[2]*60*1000;
+				spc[3]=Math.floor(m/1000);
+				spc[1]=addZ(spc[1]);
+				spc[2]=addZ(spc[2]);
+				spc[3]=addZ(spc[3]);
+				return spc;
+			}
+			
+			function addZ(num) {
+				if(num<10) {
+					num="0"+num;
+				}
+				return num;
+			}
+			
+			
+			//获得每个选择框的值
+			function getValue() {				
+				for(var i=0;i<st.length;i++) {
+					var index=st[i].selectedIndex;
+					var txt=st[i].options[index].text;
+					arr[i]=txt;
+				}
+			}
+			
+			
+			//设置日期
+			function setDate() {
+				getValue();
+				var week=getWeekText(arr[0],arr[1],arr[2]);
+				var str=getDate(arr[0],arr[1],arr[2],arr[3],arr[4],arr[5]);
+				r.innerHTML="现在距离"+arr[0]+"年"+arr[1]+"月"+arr[2]+
+				"日"+" "+week+" "+arr[3]+":"+arr[4]+":"+arr[5]+" "
+				+str+" "+pce[0]+"天"+pce[1]+"小时"+pce[2]+"分"+pce[3]+"秒";
+			}
+			
+			
+			btn.onclick=function() {
+				clearInterval(time);
+				setDate();
+				time=setInterval(setDate,1000);
+			}
+			
+			time=setInterval(setDate,1000);
+		</script>
+	</body>
+</html>
