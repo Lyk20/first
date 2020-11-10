@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			ul,body {
+				margin: 0;
+				padding: 0
+			}
+			
+			ul,li{
+				list-style-type: none;
+			}
+			
+			li {
+				width: 205px;
+			}
+			
+			li:hover {
+				background: #fcae25;
+			}
+			input {
+				width: 200px;
+			}
+			
+			.lori {
+				background: #FF5500;
+			}
+			
+			.lorwh {
+				background: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrapper">
+		    <input id="email-input" type="text">
+		    <ul id="email-sug-wrapper" class="email-sug">
+		    	<li></li><li></li><li></li><li></li><li></li>
+		    </ul>
+		</div>
+		
+		<script type="text/javascript">
+			var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+			var j=0;
+			var uli=document.getElementById("email-sug-wrapper");
+			var l=document.getElementsByTagName("li");
+			var ipt=document.getElementById("email-input");
+			disShow();
+			window.onload=function() {				
+				ipt.onkeyup = function() {					
+					var e = event || window.event || arguments.callee.caller.arguments[0];
+					var str;
+					var jstr;
+					if(e.keyCode!=13 && e.keyCode!=38 && e.keyCode!=40 ) {
+						j=0;
+					}
+					else if(e.keyCode==40) {
+						j++;
+						j=j%postfixList.length;
+					}
+					else if(e.keyCode==38) {
+						j--;
+						j=(j+5)%postfixList.length;
+					}
+					setColor();
+					l[j].setAttribute("class","lori");
+					str=getIpt(this.value);
+					jstr=setStr(str);					
+					addToStr(jstr);
+					control(jstr);
+					if(e.keyCode==13) {
+						ipt.value=l[j].innerHTML;
+						uli.style.display="none";
+					}
+				}
+				for(var i=0;i<l.length;i++) {					
+					l[i].onclick=function() {
+						ipt.value=this.innerHTML;
+						this.style.display="none";
+					}
+				}
+				
+				uli.onmouseover=function() {
+					setColor();
+				}
+				
+				uli.onmouseout=function() {
+					l[0].setAttribute("class","lori");
+				}
+			}
+			
+			function setColor() {
+				for(var i=0;i<postfixList.length;i++) {
+					l[i].setAttribute("class","lorwh");
+				}
+			}
+			function getIpt(str) {
+			    str=str.trim();
+			    return str;
+			}
+			
+			function setStr(str) {
+			   	var cstr=[];
+			   	var j=0;
+			   	var front;
+			   	var behined;
+			   	var index=str.indexOf("@");
+			   	if(index !=-1) {
+			        	front=str.slice(0,index);
+			        	behined=str.slice(++index);
+			        	for(var i=0;i<postfixList.length;i++) {
+			   	    		if(postfixList[i].match(behined) && behined !="") {
+			   	    			cstr[j]=front+"@"+postfixList[i];
+			   	    			j++;
+			   	    		}
+			        		else if(behined.match(postfixList[i])) {
+			   	    			for(var i=0;i<postfixList.length;i++) {
+			        	    		cstr[i]=front+"@"+postfixList[i];
+			        			}
+			   	    		}    
+			   	}
+			        }
+			   	else {
+			   		for(var i=0;i<postfixList.length;i++) {
+			   			if(str.length) 
+			        	    cstr[i]=str+"@"+postfixList[i];
+			        	else 
+			        		cstr[i]="";
+			        }
+			   	}
+
+			    return cstr;
+			}
+			
+			function addToStr(str) {
+				
+			   	for(var i=0;i<str.length;i++) {
+			   		/*var l=document.createElement("li");
+			   		var ltxt=document.createTextNode(str[i]);
+			   		l.appendChild(ltxt);
+			   		uli.appendChild(l);*/
+			   		
+			   		if(str.length>0)
+			   		l[i].style.display="block";
+			   		l[i].innerHTML=str[i];
+			   	}
+			   	if(str.length<postfixList.length && str.length>0) {
+			   		for(var i=str.length;i<postfixList.length;i++) {
+			   			l[i].style.display="none";
+			   		}
+			   	}
+			}
+			
+			
+			function control(str) {
+			    if(!str) {
+			        disShow();
+			    } else {
+			        show();
+			    }
+			}
+			
+			function disShow() {
+			    uli.style.display="none";
+			}
+			
+			function show() {
+			    uli.style.display="block";
+			}
+			
+		</script>
+	</body>
+</html>
